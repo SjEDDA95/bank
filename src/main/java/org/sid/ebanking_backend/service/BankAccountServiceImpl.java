@@ -110,12 +110,33 @@ public class BankAccountServiceImpl implements BankAccountService{
     }
 
     @Override
-    public void credit(String accountID, double amount, String description) {
-
+    public void credit(String accountID, double amount, String description) throws BankAccountNotFoundException, InsufficientBalanceException {
+        BankAccount bankAccount = getBankAccount(accountID);
+        AccountOperation accountOperation = new AccountOperation();
+        accountOperation.setOperationType(OperationType.CREDIT);
+        accountOperation.setAmount(amount);
+        accountOperation.setDescription(description);
+        accountOperation.setOperationDate(new Date());
+        accountOperation.setBankAccount(bankAccount);
+        accountOperationRepository.save(accountOperation);
+        bankAccount.setBalance(bankAccount.getBalance() + amount);
+        bankAccountRepository.save(bankAccount);
     }
 
     @Override
-    public void transfer(String accountIdSource, String accountIdDestination, double amount) {
+    public void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, InsufficientBalanceException {
+
+        debit(accountIdSource, amount, "DEBIT OPERATION");
+        log.info("##### Processing debit from account : <{}> of amount : <{}>", accountIdSource, amount);
+        credit(accountIdDestination, amount, "CREDIT OPERATION");
+        log.info("##### Processing credit to account destination : <{}> of amount : <{}>", accountIdDestination, amount);
+
+        
+
+        BankAccount bankAccountSender = getBankAccount(accountIdSource);
+        BankAccount bankAccountReceiver = getBankAccount(accountIdDestination);
+
+
 
     }
 }

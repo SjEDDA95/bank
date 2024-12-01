@@ -29,9 +29,9 @@ public interface BankAccountService {
     // Créer des opérations de débit, crédit, virement
     void debit(String accountID, double amount, String description) throws BankAccountNotFoundException, InsufficientBalanceException;
 
-    void credit(String accountID, double amount, String description);
+    void credit(String accountID, double amount, String description) throws BankAccountNotFoundException, InsufficientBalanceException;
 
-    void transfer(String accountIdSource, String accountIdDestination, double amount);
+    void transfer(String accountIdSource, String accountIdDestination, double amount) throws BankAccountNotFoundException, InsufficientBalanceException;
 
 
 }
