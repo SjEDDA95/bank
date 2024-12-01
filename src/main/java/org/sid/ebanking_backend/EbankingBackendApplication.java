@@ -1,12 +1,12 @@
 package org.sid.ebanking_backend;
 
-import org.sid.ebanking_backend.entities.CurrentAccount;
-import org.sid.ebanking_backend.entities.Customer;
-import org.sid.ebanking_backend.entities.SavingAccount;
+import org.sid.ebanking_backend.entities.*;
 import org.sid.ebanking_backend.enums.AccountStatus;
+import org.sid.ebanking_backend.enums.OperationType;
 import org.sid.ebanking_backend.repositories.AccountOperationRepository;
 import org.sid.ebanking_backend.repositories.BankAccountRepository;
 import org.sid.ebanking_backend.repositories.CustomerRepository;
+import org.sid.ebanking_backend.service.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,8 +23,14 @@ public class EbankingBackendApplication {
 		SpringApplication.run(EbankingBackendApplication.class, args);
 	}
 
-
 	@Bean
+	CommandLineRunner commandLineRunner(BankService bankService) {
+		return args -> {
+			bankService.consult();
+		};
+	}
+
+	//@Bean
 	CommandLineRunner start(CustomerRepository customerRepository,
 							BankAccountRepository bankAccountRepository,
 							AccountOperationRepository accountOperationRepository) {
@@ -55,6 +61,18 @@ public class EbankingBackendApplication {
 				savingAccount.setCustomer(cust);
 				savingAccount.setInterestRate(4.4);
 				bankAccountRepository.save(savingAccount);
+			});
+			bankAccountRepository.findAll().forEach(account -> {
+				for (int i = 0; i < 10; i++) {
+					// pour chaque compte je veux créer 5 opérations
+					AccountOperation accountOperation = new AccountOperation();
+					accountOperation.setOperationDate(new Date());
+					accountOperation.setAmount(Math.random() * 234);
+					accountOperation.setOperationType(Math.random() > 0.5 ?  OperationType.DEBIT : OperationType.CREDIT);
+					accountOperation.setBankAccount(account);
+					accountOperationRepository.save(accountOperation);
+				}
+
 			});
 		};
 	}

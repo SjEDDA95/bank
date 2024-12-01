@@ -25,6 +25,10 @@ public class BankAccount {
     private AccountStatus accountStatus;
     @ManyToOne
     private Customer customer;
-    @OneToMany(mappedBy = "bankAccount")
+    // différence lazy eager
+    // lazy : charge-moi tout sans les opérations
+    // eager : charge tout
+    @OneToMany(mappedBy = "bankAccount", fetch = FetchType.EAGER)
+    // Eager pas la meilleure solution, il faudra gérer dans le service
     private List<AccountOperation> accountOperations;
 }

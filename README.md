@@ -35,3 +35,7 @@ on spécifie la BDD (application.properties)
 on va venir créer 3 interfaces dans repositorites pour JPA
 
 test fictif d'insértion de données dans la base pour avoir un visuel H2
+
+effectuer la bascule de H2 à MYSQL maintenant
+
+création de la classe dans services pour gérer le flux des opérations (cf. eager/lazy)
