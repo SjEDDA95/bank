@@ -43,3 +43,16 @@ création de la classe dans services pour gérer le flux des opérations (cf. ea
 on commence la couche service..
 
 ensuite, on implémente la/les interface/s
+
+pourquoi on a besoin des DTO's ?...
+
+On commence par créer les différents rest controller pour les =>
+- Customers
+- Bank accounts
+
+On a mis en place les DTO avec customerDTO et deux méthodes mapper
+fromcustomer
+fromcustomerdto
+
+pour le transfer des données pour l'UI de customer à customerdto directement
+en évitant de mapper les entités (domaine complexe pour l'UI)

@@ -2,12 +2,14 @@ package org.sid.ebanking_backend.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.sid.ebanking_backend.dto.CustomerDTO;
 import org.sid.ebanking_backend.entities.*;
 import org.sid.ebanking_backend.enums.AccountStatus;
 import org.sid.ebanking_backend.enums.OperationType;
 import org.sid.ebanking_backend.exceptions.BankAccountNotFoundException;
 import org.sid.ebanking_backend.exceptions.CustomerNotFoundException;
 import org.sid.ebanking_backend.exceptions.InsufficientBalanceException;
+import org.sid.ebanking_backend.mappers.BankAccountMapperImpl;
 import org.sid.ebanking_backend.repositories.AccountOperationRepository;
 import org.sid.ebanking_backend.repositories.BankAccountRepository;
 import org.sid.ebanking_backend.repositories.CustomerRepository;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -31,6 +34,8 @@ public class BankAccountServiceImpl implements BankAccountService{
     private BankAccountRepository bankAccountRepository;
 
     private AccountOperationRepository accountOperationRepository;
+
+    private BankAccountMapperImpl dtoMapper;
 
     @Override
     public Customer saveCustomer(Customer customer) {
@@ -81,8 +86,10 @@ public class BankAccountServiceImpl implements BankAccountService{
 
 
     @Override
-    public List<Customer> listCustomers() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> listCustomers() {
+        List<Customer> customers = customerRepository.findAll();
+        return customers.stream().map(customer ->
+                dtoMapper.fromCustomer(customer)).collect(Collectors.toList());
     }
 
     @Override
@@ -131,12 +138,20 @@ public class BankAccountServiceImpl implements BankAccountService{
         credit(accountIdDestination, amount, "CREDIT OPERATION");
         log.info("##### Processing credit to account destination : <{}> of amount : <{}>", accountIdDestination, amount);
 
-        
 
-        BankAccount bankAccountSender = getBankAccount(accountIdSource);
-        BankAccount bankAccountReceiver = getBankAccount(accountIdDestination);
+    }
 
+    @Override
+    public List<BankAccount> bankAccountList() {
+        return bankAccountRepository.findAll();
+    }
 
-
+    // @TODO - 1 [timecode 1:47:43]
+    // Méthode pour retourner un utilisateur
+    @Override
+    public CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found by his id"));
+        return dtoMapper.fromCustomer(customer);
     }
 }

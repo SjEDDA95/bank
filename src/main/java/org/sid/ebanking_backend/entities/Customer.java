@@ -1,5 +1,6 @@
 package org.sid.ebanking_backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,6 @@ public class Customer {
     private String customerEmail;
     // Un client peut avoir plusieurs comptes
     @OneToMany(mappedBy = "customer")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<BankAccount> bankAccounts;
 }
