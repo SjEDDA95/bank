@@ -64,3 +64,7 @@ On met en place le backend swagger :
   
 L'url nous génére un document JSON qui nous montre les fonctionnalités de notre
 API RESTful (interface du webservice)
+
+On commence la partie RESTful pour les comptes, les retraits etc...
+
+==>

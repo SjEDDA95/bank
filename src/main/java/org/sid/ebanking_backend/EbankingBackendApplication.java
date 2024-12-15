@@ -1,7 +1,10 @@
 package org.sid.ebanking_backend;
 
 import lombok.extern.slf4j.Slf4j;
+import org.sid.ebanking_backend.dto.BankAccountDTO;
+import org.sid.ebanking_backend.dto.CurrentBankAccountDTO;
 import org.sid.ebanking_backend.dto.CustomerDTO;
+import org.sid.ebanking_backend.dto.SavingBankAccountDTO;
 import org.sid.ebanking_backend.entities.*;
 import org.sid.ebanking_backend.enums.AccountStatus;
 import org.sid.ebanking_backend.enums.OperationType;
@@ -52,17 +55,24 @@ public class EbankingBackendApplication {
 							customer.getId(),
 							4.3
 					);
-					List<BankAccount> bankAccounts = bankAccountService.bankAccountList();
-					for(BankAccount bankAccount : bankAccounts) {
+					List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
+					for(BankAccountDTO bankAccount : bankAccounts) {
 						for(int i = 0; i < 10; i++) {
+							// @TODO - 4 étape 17, modifier le test donc obligé de cast??
+							String accountId;
+							if(bankAccount instanceof SavingBankAccountDTO) {
+								accountId = ((SavingBankAccountDTO) bankAccount).getId();
+							} else {
+								accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+							}
 							bankAccountService.credit(
-									bankAccount.getId(),
+									accountId,
 									19000 * Math.random() * 34,
 									"CREDIT OPERATION"
 							);
 
 							bankAccountService.debit(
-									bankAccount.getId(),
+									accountId,
 									1200 * Math.random() * 66,
 									"DEBIT OPERATION"
 							);
