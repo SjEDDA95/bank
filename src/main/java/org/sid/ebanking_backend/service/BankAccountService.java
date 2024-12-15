@@ -1,9 +1,6 @@
 package org.sid.ebanking_backend.service;
 
-import org.sid.ebanking_backend.dto.BankAccountDTO;
-import org.sid.ebanking_backend.dto.CurrentBankAccountDTO;
-import org.sid.ebanking_backend.dto.CustomerDTO;
-import org.sid.ebanking_backend.dto.SavingBankAccountDTO;
+import org.sid.ebanking_backend.dto.*;
 import org.sid.ebanking_backend.entities.*;
 import org.sid.ebanking_backend.exceptions.BankAccountNotFoundException;
 import org.sid.ebanking_backend.exceptions.CustomerNotFoundException;
@@ -48,4 +45,10 @@ public interface BankAccountService {
     void deleteCustomer(Long customerId) throws CustomerNotFoundException;
 
     CustomerDTO updateCustomer(CustomerDTO customerDTO);
+
+    // @TODO 6 étape 5
+    List<AccountOperationDTO> accountHistoryOperations(String accountId);
+
+    // @TODO 6 étape 11
+    AccountHistoryDTO getAccountHistoryPages(String accountId, int page, int size) throws BankAccountNotFoundException;
 }

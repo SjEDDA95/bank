@@ -55,35 +55,34 @@ public class EbankingBackendApplication {
 							customer.getId(),
 							4.3
 					);
-					List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
-					for(BankAccountDTO bankAccount : bankAccounts) {
-						for(int i = 0; i < 10; i++) {
-							// @TODO - 4 étape 17, modifier le test donc obligé de cast??
-							String accountId;
-							if(bankAccount instanceof SavingBankAccountDTO) {
-								accountId = ((SavingBankAccountDTO) bankAccount).getId();
-							} else {
-								accountId = ((CurrentBankAccountDTO) bankAccount).getId();
-							}
-							bankAccountService.credit(
-									accountId,
-									19000 * Math.random() * 34,
-									"CREDIT OPERATION"
-							);
-
-							bankAccountService.debit(
-									accountId,
-									1200 * Math.random() * 66,
-									"DEBIT OPERATION"
-							);
-						}
-					}
 				} catch (CustomerNotFoundException e) {
                     log.info("Customer not found exception : --> ", e);
-                } catch (BankAccountNotFoundException | InsufficientBalanceException e) {
-                    throw new RuntimeException(e);
                 }
             });
+			// @TODO 6 étape 7
+			List<BankAccountDTO> bankAccounts = bankAccountService.bankAccountList();
+			for(BankAccountDTO bankAccount : bankAccounts) {
+				for(int i = 0; i < 10; i++) {
+					// @TODO - 4 étape 17, modifier le test donc obligé de cast??
+					String accountId;
+					if(bankAccount instanceof SavingBankAccountDTO) {
+						accountId = ((SavingBankAccountDTO) bankAccount).getId();
+					} else {
+						accountId = ((CurrentBankAccountDTO) bankAccount).getId();
+					}
+					bankAccountService.credit(
+							accountId,
+							19000 * Math.random() * 34,
+							"CREDIT OPERATION"
+					);
+
+					bankAccountService.debit(
+							accountId,
+							1200 * Math.random() * 66,
+							"DEBIT OPERATION"
+					);
+				}
+			}
 			bankAccountService.bankAccountList();
 		};
 	}
