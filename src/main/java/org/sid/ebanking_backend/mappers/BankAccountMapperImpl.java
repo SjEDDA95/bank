@@ -13,6 +13,11 @@ public class BankAccountMapperImpl {
         return customerDTO;
     }
 
+    /**
+     * Takes a CustomerDTO object in input and outputs a Customer object
+     * @param customerDTO customerDTO
+     * @return Customer
+     */
     public Customer fromCustomerDTO(CustomerDTO customerDTO) {
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDTO, customer);

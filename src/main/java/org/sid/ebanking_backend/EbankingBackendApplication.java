@@ -1,6 +1,7 @@
 package org.sid.ebanking_backend;
 
 import lombok.extern.slf4j.Slf4j;
+import org.sid.ebanking_backend.dto.CustomerDTO;
 import org.sid.ebanking_backend.entities.*;
 import org.sid.ebanking_backend.enums.AccountStatus;
 import org.sid.ebanking_backend.enums.OperationType;
@@ -34,7 +35,7 @@ public class EbankingBackendApplication {
 	CommandLineRunner commandLineRunner(BankAccountService bankAccountService) {
 		return args -> {
 			Stream.of("Albertos", "Gilbert", "Robert").forEach(name -> {
-				Customer customer = new Customer();
+				CustomerDTO customer = new CustomerDTO();
 				customer.setCustomerName(name);
 				customer.setCustomerEmail(name + "@gmail.com");
 				bankAccountService.saveCustomer(customer);

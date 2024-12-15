@@ -13,7 +13,9 @@ public interface BankAccountService {
     // pas besoin mots clés dans les interfaces
 
     // Créer utilisateur
-    Customer saveCustomer(Customer customer);
+//    Customer saveCustomer(Customer customer);
+
+    CustomerDTO saveCustomer(CustomerDTO customerDTO);
 
     // Créer des comptes bancaires
     CurrentAccount saveCurrentBankAccount(double initialBalance, Long customerID, double overDraft) throws CustomerNotFoundException;
@@ -35,8 +37,12 @@ public interface BankAccountService {
 
     List<BankAccount> bankAccountList();
 
-
     // @TODO - 1 [timecode 1:47:43]
     // Méthode pour retourner un utilisateur
     CustomerDTO getCustomer(Long customerId) throws CustomerNotFoundException;
+
+    // @TODO - 3 [timecode 2:02:55] supprimer un client
+    void deleteCustomer(Long customerId) throws CustomerNotFoundException;
+
+    CustomerDTO updateCustomer(CustomerDTO customerDTO);
 }

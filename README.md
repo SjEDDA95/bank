@@ -56,3 +56,11 @@ fromcustomerdto
 
 pour le transfer des données pour l'UI de customer à customerdto directement
 en évitant de mapper les entités (domaine complexe pour l'UI)
+
+On met en place le backend swagger :
+
+- http://localhost:8085/v3/api-docs
+- avec pom.xml springdocapi
+  
+L'url nous génére un document JSON qui nous montre les fonctionnalités de notre
+API RESTful (interface du webservice)
