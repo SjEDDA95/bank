@@ -48,6 +48,8 @@ public class BankAccountMapperImpl {
         // Donc on lui dit, tu me transfères les attributs, mais une fois qu'il les a transfèrer
         // On doit compléter
         savingBankAccountDTO.setCustomerDTO(fromCustomer(savingAccount.getCustomer())); // Obtenue suite a la copie de propriétés
+        // @TODO - 5 étape 2
+        savingBankAccountDTO.setType(savingAccount.getClass().getSimpleName().toUpperCase()); // le nom de classe de l'objet
         return savingBankAccountDTO;
     }
 
@@ -76,6 +78,8 @@ public class BankAccountMapperImpl {
         CurrentBankAccountDTO currentBankAccountDTO = new CurrentBankAccountDTO();
         BeanUtils.copyProperties(currentAccount, currentBankAccountDTO);
         currentBankAccountDTO.setCustomerDTO(fromCustomer(currentAccount.getCustomer()));
+        // @TODO - 5 étape 2bis
+        currentBankAccountDTO.setType(currentAccount.getClass().getSimpleName().toUpperCase()); // le nom de classe de l'objet
         return currentBankAccountDTO;
     }
 
