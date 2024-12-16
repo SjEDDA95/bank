@@ -15,6 +15,7 @@ import java.util.List;
 //@RequestMapping("/customers")
 @AllArgsConstructor // Injection des dépendences
 @Slf4j
+@CrossOrigin("*")
 public class CustomerRestController {
     // Le controller communique uniquement avec la couche Service
     private BankAccountService bankAccountService;
@@ -22,6 +23,11 @@ public class CustomerRestController {
     @GetMapping("/customers")
     public List<CustomerDTO> getCustomerDTOList() {
         return bankAccountService.listCustomers();
+    }
+
+    @GetMapping("/customers/search")
+    public List<CustomerDTO> searchCustomers(@RequestParam(name = "keyword",defaultValue = "") String keyword){
+        return bankAccountService.searchCustomers("%"+keyword+"%");
     }
 
     // @TODO - 1 [timecode 1:47:43]
