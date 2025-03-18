@@ -61,6 +61,7 @@ On met en place le backend swagger :
 
 - http://localhost:8085/v3/api-docs
 - avec pom.xml springdocapi
+- http://localhost:8085/swagger-ui/index.html#/
   
 L'url nous génére un document JSON qui nous montre les fonctionnalités de notre
 API RESTful (interface du webservice)
